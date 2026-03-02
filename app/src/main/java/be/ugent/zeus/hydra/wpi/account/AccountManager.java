@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2022 Niko Strijbol
+ * Copyright (c) 2026 Jonas Meeuws
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -67,7 +68,7 @@ public class AccountManager {
     @Nullable
     public static String getUsername(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(PREF_WPI_USERNAME, context.getString(R.string.wpi_product_na));
+        return preferences.getString(PREF_WPI_USERNAME, null);
     }
 
     @Nullable
