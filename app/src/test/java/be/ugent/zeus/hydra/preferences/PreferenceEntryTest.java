@@ -22,14 +22,23 @@
 
 package be.ugent.zeus.hydra.preferences;
 
+import android.os.Parcel;
+
+import be.ugent.zeus.hydra.common.MockParcel;
 import org.junit.Test;
 
-import static be.ugent.zeus.hydra.testing.Assert.assertParcelable;
+import static org.junit.Assert.assertEquals;
 
 public class PreferenceEntryTest {
 
     @Test
     public void parcelable() {
-        assertParcelable(PreferenceEntry.class);
+        PreferenceEntry entry = PreferenceEntry.HOME;
+        assertEquals(0, entry.describeContents());
+        Parcel parcel = MockParcel.writeToParcelable(entry);
+        PreferenceEntry other = PreferenceEntry.CREATOR.createFromParcel(parcel);
+        assertEquals(entry, other);
+        PreferenceEntry[] array = PreferenceEntry.CREATOR.newArray(3);
+        assertEquals(3, array.length);
     }
 }

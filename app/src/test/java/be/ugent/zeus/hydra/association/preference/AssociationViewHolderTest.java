@@ -27,6 +27,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import be.ugent.zeus.hydra.R;
 import be.ugent.zeus.hydra.association.Association;
 import org.junit.Before;
@@ -36,7 +38,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.assertTextIs;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.inflate;
-import static be.ugent.zeus.hydra.testing.Utils.generate;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -59,7 +60,7 @@ public class AssociationViewHolderTest {
     @Test
     public void populateChecked() {
         View view = inflate(R.layout.item_checkbox_string);
-        Association association = generate(Association.class);
+        Association association = new Association("abbr", "Name", List.of(), null, null, null, null);
         Pair<Association, Boolean> data = new Pair<>(association, true);
         AssociationViewHolder viewHolder = new AssociationViewHolder(view, associationsAdapter);
         viewHolder.populate(data);

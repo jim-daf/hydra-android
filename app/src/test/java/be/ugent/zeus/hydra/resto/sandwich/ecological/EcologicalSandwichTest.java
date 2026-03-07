@@ -22,13 +22,21 @@
 
 package be.ugent.zeus.hydra.resto.sandwich.ecological;
 
-import be.ugent.zeus.hydra.common.ModelTest;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
+import static be.ugent.zeus.hydra.testing.Assert.assertRecordParcelable;
 
 /**
  * @author Niko Strijbol
  */
-public class EcologicalSandwichTest extends ModelTest<EcologicalSandwich> {
-    public EcologicalSandwichTest() {
-        super(EcologicalSandwich.class);
+public class EcologicalSandwichTest {
+
+    @Test
+    public void parcelable() {
+        assertRecordParcelable(new EcologicalSandwich("Name", false, new ArrayList<>(List.of("ingredient")), LocalDate.now(), LocalDate.now().plusDays(7)));
     }
 }

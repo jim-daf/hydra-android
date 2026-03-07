@@ -26,8 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import be.ugent.zeus.hydra.testing.Utils;
+import java.util.stream.IntStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -49,7 +48,7 @@ public class DiffUpdateTest {
 
     @Test
     public void testNewDataNull() {
-        List<Integer> expectedData = Utils.generate(Integer.class, 20).collect(Collectors.toList());
+        List<Integer> expectedData = IntStream.range(0, 20).boxed().collect(Collectors.toList());
 
         DiffUpdate<Integer> update = new DiffUpdate<>(expectedData);
         List<Integer> actualNewData = update.newData(null);
@@ -66,7 +65,7 @@ public class DiffUpdateTest {
 
     @Test
     public void testNewDataEmpty() {
-        List<Integer> expectedData = Utils.generate(Integer.class, 20).collect(Collectors.toList());
+        List<Integer> expectedData = IntStream.range(0, 20).boxed().collect(Collectors.toList());
 
         DiffUpdate<Integer> update = new DiffUpdate<>(expectedData);
         List<Integer> actualNewData = update.newData(Collections.emptyList());
@@ -83,7 +82,7 @@ public class DiffUpdateTest {
 
     @Test
     public void testDeletionNull() {
-        List<Integer> existingData = Utils.generate(Integer.class, 20).collect(Collectors.toList());
+        List<Integer> existingData = IntStream.range(0, 20).boxed().collect(Collectors.toList());
 
         DiffUpdate<Integer> update = new DiffUpdate<>(null);
         List<Integer> actualNewData = update.newData(existingData);
@@ -100,7 +99,7 @@ public class DiffUpdateTest {
 
     @Test
     public void testDeletionEmpty() {
-        List<Integer> existingData = Utils.generate(Integer.class, 20).collect(Collectors.toList());
+        List<Integer> existingData = IntStream.range(0, 20).boxed().collect(Collectors.toList());
 
         DiffUpdate<Integer> update = new DiffUpdate<>(Collections.emptyList());
         List<Integer> actualNewData = update.newData(existingData);

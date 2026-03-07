@@ -24,6 +24,8 @@ package be.ugent.zeus.hydra.common;
 
 import android.net.Uri;
 
+import java.time.OffsetDateTime;
+
 import be.ugent.zeus.hydra.common.ui.customtabs.ActivityHelper;
 import be.ugent.zeus.hydra.news.NewsArticle;
 import be.ugent.zeus.hydra.schamper.Article;
@@ -32,7 +34,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import static be.ugent.zeus.hydra.testing.Utils.generate;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -47,7 +48,7 @@ public class ArticleViewerTest {
     @Test
     public void viewArticleCustomTabsUGent() {
         ActivityHelper helper = mock(ActivityHelper.class);
-        NewsArticle newsItem = generate(NewsArticle.class);
+        NewsArticle newsItem = new NewsArticle("content", "id", "https://example.com", OffsetDateTime.now(), "summary", "Title", OffsetDateTime.now());
         ArticleViewer.viewArticle(RobolectricUtils.getActivityContext(), newsItem, helper);
         verify(helper, times(1)).openCustomTab(any(Uri.class));
     }
@@ -55,7 +56,7 @@ public class ArticleViewerTest {
     @Test
     public void viewArticleCustomTabsSchamper() {
         ActivityHelper helper = mock(ActivityHelper.class);
-        Article newsItem = generate(Article.class);
+        Article newsItem = new Article("Title", "https://example.com", OffsetDateTime.now(), "Author", "Body", "https://example.com/image", "Category", "Intro", "color");
         ArticleViewer.viewArticle(RobolectricUtils.getActivityContext(), newsItem, helper);
         verify(helper, times(1)).openCustomTab(any(Uri.class));
     }

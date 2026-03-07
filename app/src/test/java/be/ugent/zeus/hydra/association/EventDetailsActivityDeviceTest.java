@@ -29,9 +29,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import be.ugent.zeus.hydra.R;
+import java.time.OffsetDateTime;
+import java.util.List;
+
 import be.ugent.zeus.hydra.common.network.InstanceProvider;
 import be.ugent.zeus.hydra.testing.NoNetworkInterceptor;
-import be.ugent.zeus.hydra.testing.Utils;
 import okhttp3.OkHttpClient;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -47,8 +49,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class EventDetailsActivityDeviceTest {
 
-    private final Event event = Utils.generate(Event.class);
-    private final Association association = Utils.generate(Association.class);
+    private final Event event = new Event(1L, "Title", OffsetDateTime.now(), OffsetDateTime.now().plusHours(2), "Location", "Address", "Description", "https://example.com", "assoc", false);
+    private final Association association = new Association("abbr", "Name", List.of(), null, null, null, null);
 
     @Rule
     public ActivityScenarioRule<EventDetailsActivity> rule = new ActivityScenarioRule<>(EventDetailsActivity.start(InstrumentationRegistry.getInstrumentation().getTargetContext(), event, association));

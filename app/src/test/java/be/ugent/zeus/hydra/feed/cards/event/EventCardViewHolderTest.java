@@ -26,10 +26,10 @@ import android.content.Intent;
 import android.util.Pair;
 import android.view.View;
 
+import java.time.OffsetDateTime;
+
 import be.ugent.zeus.hydra.R;
-import be.ugent.zeus.hydra.association.Association;
-import be.ugent.zeus.hydra.association.Event;
-import be.ugent.zeus.hydra.association.EventDetailsActivity;
+import be.ugent.zeus.hydra.association.*;
 import be.ugent.zeus.hydra.feed.cards.implementations.AbstractFeedViewHolderTest;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -37,7 +37,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.*;
-import static be.ugent.zeus.hydra.testing.Utils.generate;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -51,7 +50,7 @@ public class EventCardViewHolderTest extends AbstractFeedViewHolderTest {
     public void populate() {
         View view = inflate(activityContext, R.layout.home_card_event);
         EventCardViewHolder viewHolder = new EventCardViewHolder(view, adapter);
-        EventCard eventCard = generate(EventCard.class);
+        EventCard eventCard = new EventCard(new Event(1L, "Title", OffsetDateTime.now(), OffsetDateTime.now().plusHours(2), "Location", "Address", "Description", "https://example.com", "assoc", false), new AssociationMap());
         Pair<Event, Association> event = eventCard.getEvent();
         viewHolder.populate(eventCard);
 

@@ -22,13 +22,17 @@
 
 package be.ugent.zeus.hydra.resto.extrafood;
 
-import be.ugent.zeus.hydra.common.ModelTest;
+import org.junit.Test;
+
+import static be.ugent.zeus.hydra.testing.Assert.assertRecordParcelable;
 
 /**
  * @author Niko Strijbol
  */
-public class FoodTest extends ModelTest<Food> {
-    public FoodTest() {
-        super(Food.class);
+public class FoodTest {
+
+    @Test
+    public void parcelable() {
+        assertRecordParcelable(new Food("Name", "2.50"));
     }
 }

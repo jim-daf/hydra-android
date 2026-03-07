@@ -22,7 +22,10 @@
 
 package be.ugent.zeus.hydra.library.list;
 
-import be.ugent.zeus.hydra.testing.Utils;
+import java.util.ArrayList;
+import java.util.List;
+
+import be.ugent.zeus.hydra.library.Library;
 import org.junit.Test;
 
 import static be.ugent.zeus.hydra.testing.Assert.assertRecordParcelable;
@@ -34,6 +37,7 @@ public class LibraryListTest {
 
     @Test
     public void parcelable() {
-        assertRecordParcelable(Utils.generate(LibraryList.class));
+        Library library = new Library("dept", "email@example.com", new ArrayList<>(List.of("Addr")), "Name", "Name NL", "Name EN", "CODE", new ArrayList<>(List.of("0472")), false, null, null, "51.0", "3.7", new ArrayList<>(), null, "campus", "faculty", "https://link", false);
+        assertRecordParcelable(new LibraryList("Name", 1, new ArrayList<>(List.of(library))));
     }
 }

@@ -32,7 +32,6 @@ import org.robolectric.RobolectricTestRunner;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.assertNotEmpty;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.assertTextIs;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.inflate;
-import static be.ugent.zeus.hydra.testing.Utils.generate;
 
 /**
  * @author Niko Strijbol
@@ -43,7 +42,7 @@ public class FoodViewHolderTest {
     @Test
     public void populate() {
         View view = inflate(R.layout.item_resto_fooditem);
-        Food food = generate(Food.class);
+        Food food = new Food("Name", "2.50");
         FoodViewHolder viewHolder = new FoodViewHolder(view);
         viewHolder.populate(food);
 
