@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2022 Niko Strijbol
+ * Copyright (c) 2026 Jonas Meeuws
  *  
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +28,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 import be.ugent.zeus.hydra.common.network.Endpoints;
@@ -34,6 +36,8 @@ import be.ugent.zeus.hydra.common.network.InvalidFormatException;
 import be.ugent.zeus.hydra.common.network.OkHttpRequest;
 import be.ugent.zeus.hydra.common.request.RequestException;
 import be.ugent.zeus.hydra.common.request.Result;
+import be.ugent.zeus.hydra.wpi.account.AccountManager;
+import com.squareup.moshi.Types;
 import okhttp3.*;
 
 /**
@@ -42,28 +46,34 @@ import okhttp3.*;
  * @author Niko Strijbol
  */
 public class ChatRequest extends OkHttpRequest<String> {
-    
+
+    private static MediaType JSON_MEDIA_TYPE = MediaType.get("application/json; charset=utf-8");
     private static final String ENDPOINT = "messages/";
     
+    private final String name;
     private final String message;
 
     public ChatRequest(@NonNull Context context, @NonNull String message) {
         super(context);
+        this.name = AccountManager.getUsername(context);
         this.message = message;
     }
 
     @NonNull
     @Override
     public Result<String> execute(@NonNull Bundle args) {
-
-        MediaType plainText = MediaType.get("plain/text");
-        
-        RequestBody body = RequestBody.create(message, plainText);
+        String jsonString = moshi
+            .adapter(Types.newParameterizedType(Map.class, String.class, String.class))
+            .toJson(Map.of(
+                "name",    name,
+                "message", message
+            ));
+        RequestBody body = RequestBody.create(jsonString, JSON_MEDIA_TYPE);
 
         // Create the request itself.
         okhttp3.Request request = new Request.Builder()
-                .addHeader("Accept", "application/json")
-                .addHeader("Content-Type", plainText.toString())
+                .addHeader("Accept", JSON_MEDIA_TYPE.toString())
+                .addHeader("Content-Type", JSON_MEDIA_TYPE.toString())
                 .url(Endpoints.KELDER + ENDPOINT)
                 .post(body)
                 .build();

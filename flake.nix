@@ -61,10 +61,6 @@
                 eval = "${androidComposition.androidsdk}/libexec/android-sdk";
               }
               {
-                name = "GRADLE_OPTS";
-                eval = "-Pandroid.aapt2FromMavenOverride=${aapt2Override}";
-              }
-              {
                 name = "GRADLE_HOME";
                 eval = "$PRJ_DATA_DIR/.gradle";
               }
