@@ -237,7 +237,6 @@ dependencies {
     testImplementation(libs.equalsverifier)
     testImplementation(libs.shazamcrest)
     testImplementation(libs.jsonassert)
-    testImplementation(libs.easyrandom)
     testImplementation(libs.commons.lang3)
     testImplementation(libs.commons.validator)
     testImplementation(libs.guava)

@@ -27,9 +27,11 @@ import androidx.core.content.IntentCompat;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.Intents;
 
+import java.time.OffsetDateTime;
+import java.util.List;
+
 import be.ugent.zeus.hydra.common.network.InstanceProvider;
 import be.ugent.zeus.hydra.testing.NoNetworkInterceptor;
-import be.ugent.zeus.hydra.testing.Utils;
 import okhttp3.OkHttpClient;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,8 +57,8 @@ public class EventDetailsActivityTest {
 
     @Test
     public void shouldReturnCorrectIntent_whenStartIsCalled() {
-        Event e = Utils.generate(Event.class);
-        Association a = Utils.generate(Association.class);
+        Event e = new Event(1L, "Title", OffsetDateTime.now(), OffsetDateTime.now().plusHours(2), "Location", "Address", "Description", "https://example.com", "assoc", false);
+        Association a = new Association("abbr", "Name", List.of(), null, null, null, null);
 
         var aContext = getInstrumentation().getTargetContext();
         var actual = EventDetailsActivity.start(aContext, e, a);

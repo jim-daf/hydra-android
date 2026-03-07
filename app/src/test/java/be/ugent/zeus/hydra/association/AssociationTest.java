@@ -22,7 +22,8 @@
 
 package be.ugent.zeus.hydra.association;
 
-import be.ugent.zeus.hydra.testing.Utils;
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import static be.ugent.zeus.hydra.testing.Assert.assertRecordParcelable;
@@ -30,6 +31,6 @@ import static be.ugent.zeus.hydra.testing.Assert.assertRecordParcelable;
 public class AssociationTest {
     @Test
     public void parcelable() {
-        assertRecordParcelable(Utils.generate(Association.class));
+        assertRecordParcelable(new Association("abbr", "Name", new ArrayList<>(), "Desc", "email@example.com", "logo.png", "https://website.com"));
     }
 }

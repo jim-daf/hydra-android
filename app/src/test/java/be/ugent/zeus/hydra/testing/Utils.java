@@ -26,10 +26,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.time.*;
 import java.util.*;
-import java.util.stream.Stream;
 
 import be.ugent.zeus.hydra.feed.cards.dismissal.DismissalDaoTest;
 import com.squareup.moshi.JsonAdapter;
@@ -38,10 +36,6 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import okio.BufferedSource;
 import okio.Okio;
-import org.jeasy.random.EasyRandom;
-import org.jeasy.random.EasyRandomParameters;
-
-import static org.jeasy.random.FieldPredicates.named;
 
 /**
  * General utilities and helper methods for use within the tests.
@@ -51,32 +45,6 @@ import static org.jeasy.random.FieldPredicates.named;
 public class Utils {
 
     private static final Random random = new Random();
-
-    public static <T> T generate(Class<T> clazz, String... exclude) {
-        EasyRandomParameters params = new EasyRandomParameters()
-                .scanClasspathForConcreteTypes(true)
-                .randomize(ZonedDateTime.class, ZonedDateTime::now)
-                .randomize(LocalDate.class, LocalDate::now)
-                .randomize(OffsetDateTime.class, OffsetDateTime::now)
-                .randomize(Instant.class, Instant::now);
-        for (String excluded : exclude) {
-            params.excludeField(named(excluded));
-        }
-        return new EasyRandom(params).nextObject(clazz);
-    }
-
-    public static <T> Stream<T> generate(Class<T> clazz, int amount, String... exclude) {
-        EasyRandomParameters params = new EasyRandomParameters()
-                .scanClasspathForConcreteTypes(true)
-                .randomize(ZonedDateTime.class, ZonedDateTime::now)
-                .randomize(LocalDate.class, LocalDate::now)
-                .randomize(OffsetDateTime.class, OffsetDateTime::now)
-                .randomize(Instant.class, Instant::now);
-        for (String excluded : exclude) {
-            params.excludeField(named(excluded));
-        }
-        return new EasyRandom(params).objects(clazz, amount);
-    }
 
     /**
      * Default verifier with support for {@link ZonedDateTime}.
@@ -91,12 +59,6 @@ public class Utils {
     }
 
     public static <T> T readJson(Moshi moshi, String file, Class<T> type) throws IOException {
-        BufferedSource source = Okio.buffer(Okio.source(new FileInputStream(getResourceFile(file))));
-        JsonAdapter<T> adapter = moshi.adapter(type);
-        return adapter.fromJson(source);
-    }
-
-    public static <T> T readJson(Moshi moshi, String file, Type type) throws IOException {
         BufferedSource source = Okio.buffer(Okio.source(new FileInputStream(getResourceFile(file))));
         JsonAdapter<T> adapter = moshi.adapter(type);
         return adapter.fromJson(source);

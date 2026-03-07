@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.view.View;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 import androidx.core.content.IntentCompat;
 
@@ -36,7 +37,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.*;
-import static be.ugent.zeus.hydra.testing.Utils.generate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -49,7 +49,7 @@ public class EventViewHolderTest {
     private static void testEvent(boolean isLast) {
         View view = inflate(R.layout.item_event_item);
         EventViewHolder viewHolder = new EventViewHolder(view, new AssociationMap());
-        EventItem item = EventItem.create(generate(Event.class), isLast);
+        EventItem item = EventItem.create(new Event(1L, "Title", OffsetDateTime.now(), OffsetDateTime.now().plusHours(2), "Location", "Address", "Description", "https://example.com", "assoc", false), isLast);
         Event event = item.event();
         viewHolder.populate(item);
 
@@ -79,7 +79,7 @@ public class EventViewHolderTest {
     public void populateHeader() {
         View view = inflate(R.layout.item_event_item);
         EventViewHolder viewHolder = new EventViewHolder(view, new AssociationMap());
-        EventItem item = EventItem.create(generate(LocalDate.class));
+        EventItem item = EventItem.create(LocalDate.now());
         viewHolder.populate(item);
     }
 

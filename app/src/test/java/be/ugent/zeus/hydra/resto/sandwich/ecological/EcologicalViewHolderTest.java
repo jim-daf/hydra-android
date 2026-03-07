@@ -25,8 +25,10 @@ package be.ugent.zeus.hydra.resto.sandwich.ecological;
 import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import be.ugent.zeus.hydra.R;
 import be.ugent.zeus.hydra.common.ui.recyclerview.adapters.MultiSelectAdapter;
@@ -39,7 +41,6 @@ import org.robolectric.ParameterizedRobolectricTestRunner;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.assertNotEmpty;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.assertTextIs;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.inflate;
-import static be.ugent.zeus.hydra.testing.Utils.generate;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -66,7 +67,7 @@ public class EcologicalViewHolderTest {
     @Test
     public void populate() {
         View view = inflate(R.layout.item_sandwich_eco);
-        EcologicalSandwich sandwich = generate(EcologicalSandwich.class);
+        EcologicalSandwich sandwich = new EcologicalSandwich("Name", false, List.of("ingredient"), LocalDate.now(), LocalDate.now().plusDays(7));
         @SuppressWarnings("unchecked")
         MultiSelectAdapter<EcologicalSandwich> adapter = mock(MultiSelectAdapter.class);
         when(adapter.isChecked(anyInt())).thenReturn(expanded);

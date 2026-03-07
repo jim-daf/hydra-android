@@ -22,13 +22,17 @@
 
 package be.ugent.zeus.hydra.resto.meta;
 
-import be.ugent.zeus.hydra.common.ModelTest;
+import org.junit.Test;
+
+import static be.ugent.zeus.hydra.testing.Assert.assertRecordParcelable;
 
 /**
  * @author Niko Strijbol
  */
-public class RestoTest extends ModelTest<Resto> {
-    public RestoTest() {
-        super(Resto.class);
+public class RestoTest {
+
+    @Test
+    public void parcelable() {
+        assertRecordParcelable(new Resto("Name", "Addr", 51.0, 3.7, "type", "endpoint"));
     }
 }

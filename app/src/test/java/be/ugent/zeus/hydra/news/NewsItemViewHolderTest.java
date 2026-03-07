@@ -37,7 +37,6 @@ import org.robolectric.RobolectricTestRunner;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.assertNotEmpty;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.assertTextIs;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.inflate;
-import static be.ugent.zeus.hydra.testing.Utils.generate;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -61,7 +60,7 @@ public class NewsItemViewHolderTest {
     public void populate() {
         View view = inflate(R.layout.item_news);
         NewsItemViewHolder viewHolder = new NewsItemViewHolder(view, helper);
-        NewsArticle newsItem = generate(NewsArticle.class);
+        NewsArticle newsItem = new NewsArticle("content", "id", "https://link", OffsetDateTime.now(), "summary", "Title", OffsetDateTime.now());
         viewHolder.populate(newsItem);
 
         assertTextIs(newsItem.title(), view.findViewById(R.id.name));
@@ -78,7 +77,7 @@ public class NewsItemViewHolderTest {
     public void populateVariant() {
         View view = inflate(R.layout.item_news);
         NewsItemViewHolder viewHolder = new NewsItemViewHolder(view, helper);
-        NewsArticle newsItem = generate(NewsArticle.class, "summary")
+        NewsArticle newsItem = new NewsArticle("content", "id", "https://link", OffsetDateTime.now(), null, "Title", OffsetDateTime.now())
                 .withUpdated(OffsetDateTime.now().plusDays(10));
         viewHolder.populate(newsItem);
 

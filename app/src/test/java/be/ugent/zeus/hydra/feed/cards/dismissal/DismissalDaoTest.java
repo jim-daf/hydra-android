@@ -46,7 +46,6 @@ import org.robolectric.annotation.LooperMode;
 
 import static be.ugent.zeus.hydra.testing.Assert.assertCollectionEquals;
 import static be.ugent.zeus.hydra.testing.Assert.assertThat;
-import static be.ugent.zeus.hydra.testing.Utils.generate;
 import static be.ugent.zeus.hydra.testing.Utils.getRandom;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.Is.is;
@@ -115,7 +114,7 @@ public class DismissalDaoTest {
 
     @Test
     public void shouldSaveDismissal_WhenInsertingDismissal() {
-        CardDismissal dismissal = generate(CardDismissal.class);
+        CardDismissal dismissal = new CardDismissal(new CardIdentifier(Card.Type.RESTO, "test-gen"), Instant.now());
         dismissalDao.insert(dismissal);
         List<CardDismissal> dismissals = dismissalDao.getForType(dismissal.identifier().getCardType());
         assertTrue(dismissals.contains(dismissal));

@@ -22,7 +22,8 @@
 
 package be.ugent.zeus.hydra.schamper;
 
-import be.ugent.zeus.hydra.testing.Utils;
+import java.time.OffsetDateTime;
+
 import org.junit.Test;
 
 import static be.ugent.zeus.hydra.testing.Assert.assertRecordParcelable;
@@ -34,7 +35,7 @@ public class ArticleTest {
 
     @Test
     public void parcelable() {
-        assertRecordParcelable(Utils.generate(Article.class));
+        assertRecordParcelable(new Article("Title", "https://link", OffsetDateTime.now(), "Author", "Body", "https://img", "Category", "Intro", "color"));
     }
 
 }

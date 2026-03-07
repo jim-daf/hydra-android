@@ -22,18 +22,13 @@
 
 package be.ugent.zeus.hydra.testing;
 
-import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Objects;
 
 import be.ugent.zeus.hydra.common.MockParcel;
-import be.ugent.zeus.hydra.testing.matcher.ShallowButFullEqual;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.hamcrest.*;
@@ -83,72 +78,6 @@ public class Assert {
         assertEquals(instance, other);
         T[] array = creator.newArray(10);
         assertEquals(10, array.length);
-    }
-
-    /**
-     * Assert that a class implements {@link Parcelable} correctly. This will check every field of the class.
-     * The parcelable implementation is assumed to not have any special content descriptions, i.e.
-     * {@link Parcelable#describeContents()} always returns {@code 0}.
-     *
-     * @param clazz The class of the object to test.
-     * @param <T>   The type of the object to test.
-     */
-    @SuppressWarnings("unchecked")
-    @Deprecated
-    public static <T extends Parcelable> void assertParcelable(Class<T> clazz) {
-        Objects.requireNonNull(clazz);
-        T original = Utils.generate(clazz);
-        assertEquals(0, original.describeContents());
-        Parcel parcel = MockParcel.writeToParcelable(original);
-        try {
-            Parcelable.Creator<T> creator = (Parcelable.Creator<T>) FieldUtils.readDeclaredStaticField(clazz, "CREATOR");
-            T other = creator.createFromParcel(parcel);
-            assertThat(other, samePropertyValuesAs(original));
-            T[] array = creator.newArray(10);
-            assertEquals(10, array.length);
-        } catch (IllegalAccessException e) {
-            throw new AssertionError("Class does not have a CREATOR field.", e);
-        } catch (ClassCastException e) {
-            throw new AssertionError("Class does not have a correct CREATOR field, or it is used wrong.", e);
-        }
-    }
-
-    /**
-     * Matcher that take special care of {@link ZonedDateTime}s.
-     */
-    @Deprecated
-    public static <T> Matcher<T> samePropertyValuesAs(T instance) {
-        return ShallowButFullEqual.sameFieldsAs(instance)
-                .withMatcher(ZonedDateTime.class, o -> new TypeSafeDiagnosingMatcher<ZonedDateTime>() {
-                    @Override
-                    protected boolean matchesSafely(ZonedDateTime item, Description mismatchDescription) {
-                        if (!o.isEqual(item)) {
-                            mismatchDescription.appendText(" was ").appendValue(item);
-                            return false;
-                        }
-                        return true;
-                    }
-
-                    @Override
-                    public void describeTo(Description description) {
-                        description.appendValue(instance);
-                    }
-                })
-                .withMatcher(OffsetDateTime.class, o -> new TypeSafeDiagnosingMatcher<OffsetDateTime>() {
-                    @Override
-                    protected boolean matchesSafely(OffsetDateTime item, Description mismatchDescription) {
-                        if (!o.isEqual(item)) {
-                            mismatchDescription.appendText(" was ").appendValue(item);
-                            return false;
-                        }
-                        return true;
-                    }
-
-                    @Override
-                    public void describeTo(Description description) {
-                        description.appendValue(instance);
-                    }
-                });
     }
 
     public static <T> void assertThat(T expected, Matcher<? extends T> matcher) {

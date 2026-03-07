@@ -24,13 +24,13 @@ package be.ugent.zeus.hydra.common.ui.recyclerview.adapters;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static be.ugent.zeus.hydra.testing.Utils.generate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.times;
@@ -47,7 +47,7 @@ public class DumbUpdateTest {
 
     @Test
     public void testNonNull() {
-        List<Integer> data = generate(Integer.class, 20).collect(Collectors.toList());
+        List<Integer> data = IntStream.range(0, 20).boxed().collect(Collectors.toList());
         DumbUpdate<Integer> update = new DumbUpdate<>(data);
         assertEquals(data, update.newData(null));
         update.applyUpdatesTo(callback);

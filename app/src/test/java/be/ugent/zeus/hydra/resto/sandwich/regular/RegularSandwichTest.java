@@ -22,13 +22,20 @@
 
 package be.ugent.zeus.hydra.resto.sandwich.regular;
 
-import be.ugent.zeus.hydra.common.ModelTest;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
+import static be.ugent.zeus.hydra.testing.Assert.assertRecordParcelable;
 
 /**
  * @author Niko Strijbol
  */
-public class RegularSandwichTest extends ModelTest<RegularSandwich> {
-    public RegularSandwichTest() {
-        super(RegularSandwich.class);
+public class RegularSandwichTest {
+
+    @Test
+    public void parcelable() {
+        assertRecordParcelable(new RegularSandwich("Test", new ArrayList<>(List.of("ingredient")), "3.50"));
     }
 }

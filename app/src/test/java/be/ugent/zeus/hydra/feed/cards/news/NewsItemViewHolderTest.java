@@ -31,10 +31,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import java.time.OffsetDateTime;
+
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.assertNotEmpty;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.assertTextIs;
 import static be.ugent.zeus.hydra.testing.RobolectricUtils.inflate;
-import static be.ugent.zeus.hydra.testing.Utils.generate;
 
 /**
  * @author Niko Strijbol
@@ -46,7 +47,7 @@ public class NewsItemViewHolderTest extends AbstractFeedViewHolderTest {
     public void populate() {
         View view = inflate(activityContext, R.layout.home_card_news_item);
         var viewHolder = new NewsItemViewHolder(view, adapter);
-        var article = generate(NewsArticle.class);
+        var article = new NewsArticle("content", "id", "https://link", OffsetDateTime.now(), "summary", "Title", OffsetDateTime.now());
         var card = new NewsItemCard(article);
         viewHolder.populate(card);
 
