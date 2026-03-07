@@ -72,12 +72,14 @@ jobs:
           name: hydra-store.apk
           path: app/build/outputs/apk/store/release/app-store-release.apk
           if-no-files-found: error
+          archive: false
       - name: Upload foss APK
         uses: actions/upload-artifact@v7
         with:
           name: hydra-foss.apk
           path: app/build/outputs/apk/open/release/app-open-release.apk
           if-no-files-found: error
+          archive: false
       - name: Build App Bundle
         run: ./gradlew bundleRelease
       - name: Upload store bundle
@@ -86,9 +88,11 @@ jobs:
           name: hydra-store.aab
           path: app/build/outputs/bundle/storeRelease/app-store-release.aab
           if-no-files-found: error
+          archive: false
       - name: Upload foss bundle
         uses: actions/upload-artifact@v7
         with:
           name: hydra-foss.aab
           path: app/build/outputs/bundle/openRelease/app-open-release.aab
           if-no-files-found: error
+          archive: false
